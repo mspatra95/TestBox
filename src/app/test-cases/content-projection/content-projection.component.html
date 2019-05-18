@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="col-md-offset-3 col-md-6 text-center">
+    <button class="btn btn-primary" (click)="showPopup = true">
+      Show pop-up
+    </button>
+  </div>
+
+  <app-popup-window [isOpen]="showPopup" title="Test pop-up">
+    <body>
+      This is the body of the pop-up.
+    </body>
+    <footer>
+      <button (click)="showPopup = false">Close</button>
+    </footer>
+  </app-popup-window>
+</div>

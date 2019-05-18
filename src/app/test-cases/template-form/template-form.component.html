@@ -46,5 +46,7 @@
     >
   </div>
   <p *ngIf="!signupForm.valid && signupForm.touched">The form is invalid!</p>
-  <button class="btn btn-primary" type="submit">Submit</button>
+  <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">
+    Submit
+  </button>
 </form>

@@ -25,6 +25,8 @@
     "bootstrap": "^4.3.1",
     "core-js": "^3.0.1",
     "jquery": "^3.4.1",
+    "ng2-slim-loading-bar": "^4.0.0",
+    "ngx-take-until-destroy": "^5.4.0",
     "popper.js": "^1.15.0",
     "rxjs": "^6.5.2",
     "tslib": "^1.9.0",
@@ -51,7 +53,6 @@
     "rxjs-tslint": "^0.1.7",
     "ts-node": "~7.0.0",
     "tslint": "^5.16.0",
-    "typescript": "^3.4.5",
-    "webpack": "^4.31.0"
+    "typescript": "^3.4.5"
   }
 }

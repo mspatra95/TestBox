@@ -1,0 +1,33 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Admin</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entity of entities; index as index">
+      <td>{{ index + 1 }}</td>
+      <td>
+        <editable editableOnEnter (update)="updateField(index, 'name')">
+          <ng-template viewMode>{{ entity.name }}</ng-template>
+          <ng-template editMode>
+            <input [formControl]="getControl(index, 'name')" />
+          </ng-template>
+        </editable>
+      </td>
+      <td>
+        <editable editableOnEnter (update)="updateField(index, 'isAdmin')">
+          <ng-template viewMode>{{ entity.isAdmin }}</ng-template>
+          <ng-template editMode>
+            <input
+              type="checkbox"
+              [formControl]="getControl(index, 'isAdmin')"
+            />{{ entity.isAdmin }}
+          </ng-template>
+        </editable>
+      </td>
+    </tr>
+  </tbody>
+</table>

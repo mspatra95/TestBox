@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    redirectTo: "content-projection"
+    redirectTo: "pagination"
   },
   {
     path: "template-form",
@@ -27,6 +27,10 @@ const routes: Routes = [
     path: "content-projection",
     loadChildren:
       "./test-cases/content-projection/content-projection.module#ContentProjectionModule"
+  },
+  {
+    path: "pagination",
+    loadChildren: "./test-cases/paginator/paginator.module#PaginatorModule"
   }
 ];
 

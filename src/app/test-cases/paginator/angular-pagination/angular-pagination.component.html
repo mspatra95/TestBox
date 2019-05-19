@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="text-center">
+    <div class="col-12">
+      <div class="table-responsive text-no-wrap">
+        <table class="table table-borderless btn-table">
+          <thead>
+            <tr>
+              <th *ngFor="let column of columnsList">
+                {{ column }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pagedItem of pagedItems">
+              <td *ngFor="let field of columnsNames">
+                <span [innerHtml]="pagedItem[field]"></span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <nav class="nav pagination">
+      <ul class="pagination pg-blue">
+        <li class="page-item" [ngClass]="{ disabled: pager.currentPage === 1 }">
+          <button type="button" class="page-link" (click)="setPage(1)">
+            First
+          </button>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: pager.currentPage === 1 }">
+          <button
+            type="button"
+            class="page-link"
+            (click)="setPage(pager.currentPage - 1)"
+          >
+            Previous
+          </button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of pager.pages"
+          [ngClass]="{ active: pager.currentPage === page }"
+        >
+          <button type="button" class="page-link" (click)="setPage(page)">
+            {{ page }}
+          </button>
+        </li>
+        <li
+          class="page-item"
+          [ngClass]="{ disabled: pager.currentPage === pager.totalPages }"
+        >
+          <button
+            type="button"
+            class="page-link"
+            (click)="setPage(pager.currentPage + 1)"
+          >
+            Next
+          </button>
+        </li>
+        <li
+          class="page-item"
+          [ngClass]="{ disabled: pager.currentPage === pager.totalPages }"
+        >
+          <button
+            type="button"
+            class="page-link"
+            (click)="setPage(pager.totalPages)"
+          >
+            Last
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

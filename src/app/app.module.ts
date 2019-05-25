@@ -13,6 +13,7 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { ViewReactiveFormComponent } from './test-cases/view-reactive-form/view-reactive-form.component';
+import { DataPatchRxFormComponent } from './test-cases/data-patch-rx-form/data-patch-rx-form.component';
 library.add(fas);
 
 @NgModule({
@@ -23,7 +24,8 @@ library.add(fas);
     DragDropDirective,
     ReactiveFormComponent,
     ShowPasswordDirective,
-    ViewReactiveFormComponent
+    ViewReactiveFormComponent,
+    DataPatchRxFormComponent
   ],
   imports: [
     BrowserModule,

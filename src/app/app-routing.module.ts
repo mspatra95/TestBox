@@ -1,5 +1,5 @@
+import { DataPatchRxFormComponent } from "./test-cases/data-patch-rx-form/data-patch-rx-form.component";
 import { ViewReactiveFormComponent } from "./test-cases/view-reactive-form/view-reactive-form.component";
-import { EditInPlaceComponent } from "./test-cases/edit-in-place/edit-in-place.component";
 import { TemplateFormComponent } from "./test-cases/template-form/template-form.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    redirectTo: "view-reactive-form"
+    redirectTo: "data-patch-rx-form"
   },
   {
     path: "template-form",
@@ -41,6 +41,10 @@ const routes: Routes = [
   {
     path: "view-reactive-form",
     component: ViewReactiveFormComponent
+  },
+  {
+    path: "data-patch-rx-form",
+    component: DataPatchRxFormComponent
   },
   { path: "**", redirectTo: "" }
 ];

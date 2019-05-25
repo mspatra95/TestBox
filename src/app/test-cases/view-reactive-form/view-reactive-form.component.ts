@@ -1,10 +1,4 @@
-import {
-  FormBuilder,
-  Validators,
-  FormGroup,
-  FormArray,
-  FormControl
-} from "@angular/forms";
+import { FormBuilder, Validators, FormGroup, FormArray } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -13,108 +7,145 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./view-reactive-form.component.css"]
 })
 export class ViewReactiveFormComponent implements OnInit {
-  survey: FormGroup;
-  constructor() {}
+  cvForm: FormGroup;
+  dataModel: any; //active model
+  storeData: any; //save to disk model
+  constructor(private _fb: FormBuilder) {}
+
+  showValue() {
+    return this.cvForm.getRawValue();
+  }
+
+  showSavedValue() {
+    return this.dataModel;
+  }
+
+  saveForm() {
+    //save form values to ojbect and reset the form
+    this.storeData = this.cvForm.getRawValue();
+    this.cvForm.reset();
+    // reset will not remove form elements added already
+    //to the formarrays so we need to purge those as well
+    //without losing our subscription!
+    (this.cvForm.get("lines") as FormArray)["controls"].splice(0);
+  }
+
+  loadFormAction() {
+    this.loadForm(this.storeData);
+  }
+
+  loadForm(data) {
+    //create lines array first
+    for (let index = 0; index < data.lines.length; index++) {
+      const linesFormArray = this.cvForm.get("lines") as FormArray;
+      linesFormArray.push(this.line);
+      for (
+        let player = 0;
+        player < data.lines[index].players.length;
+        player++
+      ) {
+        const playersFormsArray = linesFormArray
+          .at(index)
+          .get("players") as FormArray;
+        playersFormsArray.push(this.player);
+      }
+    }
+    //once we setup the form with all the arrays and such, we cna just
+    //patch the form:
+    this.cvForm.patchValue(data);
+  }
+
+  seedForm(): void {
+    //seed the form with sample data
+    this.loadForm(seedData);
+  }
+
+  get player(): FormGroup {
+    return this._fb.group({
+      first_name: "",
+      last_name: ""
+    });
+  }
+  //get functions cannot have parameters...
+  get line(): FormGroup {
+    return this._fb.group({
+      name: "",
+      players: this._fb.array([])
+    });
+  }
 
   ngOnInit() {
-    this.survey = new FormGroup({
-      surveyName: new FormControl(""),
-      logoUrl: new FormControl(""),
-      headerUrl: new FormControl(""),
-      headerColor: new FormControl(""),
-      footerUrl: new FormControl(""),
-      footerColor: new FormControl(""),
-      sections: new FormArray([this.initSection()])
+    this.dataModel = Object.create(null);
+
+    //each team has at least one line and each line has at least
+    //3 players, so let's set that up as the default
+    this.cvForm = this._fb.group({
+      team_name: ["", [Validators.required]],
+      lines: this._fb.array([])
     });
-  }
 
-  initSection() {
-    return new FormGroup({
-      sectionTitle: new FormControl(""),
-      sectionDescription: new FormControl(""),
-      questions: new FormArray([this.initQuestion()])
+    console.log(this.cvForm.getRawValue());
+    //subscribe to value changes on form
+    this.cvForm.valueChanges.subscribe(data => {
+      this.dataModel = data;
     });
+    console.log(this.cvForm.getRawValue());
   }
-  initQuestion() {
-    return new FormGroup({
-      questionTitle: new FormControl(""),
-      questionType: new FormControl("", Validators.required),
-      options: new FormArray([this.initOptions()])
-    });
-  }
-
-  initOptions() {
-    return new FormGroup({
-      optionTitle: new FormControl("")
-    });
-  }
-
-  addSection() {
-    const control = <FormArray>this.survey.get("sections");
-    control.push(this.initSection());
-  }
-
-  addQuestion(j) {
-    console.log(j);
-    const control = <FormArray>(
-      this.survey.get("sections").controls[j].get("questions")
-    );
-    // console.log(control);
-    control.push(this.initQuestion());
-  }
-
-  add(i, j) {
-    //console.log(k);
-    const control = <FormArray>this.survey
-      .get("sections")
-      .controls[i].get("questions")
-      .controls[j].get("options");
-
-    // const control = <FormArray>this.survey.get(['sections',0,'questions',k,'options']); // also try this new syntax
-    //console.log(control);
-    control.push(this.initOptions());
-  }
-
-  getSections(form) {
-    //console.log(form.get('sections').controls);
-    return form.controls.sections.controls;
-  }
-  getQuestions(form) {
-    //console.log(form.controls.questions.controls);
-    return form.controls.questions.controls;
-  }
-  getOptions(form) {
-    //console.log(form.get('options').controls);
-    return form.controls.options.controls;
-  }
-
-  removeQuestion(j) {
-    const control = <FormArray>(
-      this.survey.get("sections").controls[j].get("questions")
-    );
-    control.removeAt(j);
-  }
-
-  removeSection(i) {
-    const control = <FormArray>this.survey.get("sections");
-    control.removeAt(i);
-  }
-
-  removeOption(i, j, k) {
-    console.log(i, j, k);
-    const control = <FormArray>(
-      this.survey.get(["sections", i, "questions", j, "options"])
-    ); // also try this new syntax
-    control.removeAt(k);
-  }
-
-  remove(i, j) {
-    const control = <FormArray>(
-      this.survey.get(["sections", i, "questions", j, "options"])
-    );
-    control.removeAt(0);
-    control.controls = [];
-  }
-
-  onSubmit(form) {}
 }
+
+const seedData = {
+  team_name: "Team",
+  lines: [
+    {
+      name: "line a",
+      players: [
+        {
+          first_name: "1a",
+          last_name: ""
+        },
+        {
+          first_name: "2a",
+          last_name: ""
+        },
+        {
+          first_name: "3a",
+          last_name: ""
+        }
+      ]
+    },
+    {
+      name: "line b",
+      players: [
+        {
+          first_name: "1b",
+          last_name: ""
+        },
+        {
+          first_name: "2b",
+          last_name: ""
+        },
+        {
+          first_name: "3b",
+          last_name: ""
+        }
+      ]
+    },
+    {
+      name: "line c",
+      players: [
+        {
+          first_name: "1c",
+          last_name: ""
+        },
+        {
+          first_name: "2c",
+          last_name: ""
+        },
+        {
+          first_name: "3c",
+          last_name: ""
+        }
+      ]
+    }
+  ]
+};

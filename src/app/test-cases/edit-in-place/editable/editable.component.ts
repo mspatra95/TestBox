@@ -19,15 +19,15 @@ import { EditModeDirective } from "src/app/test-cases/edit-in-place/directives/e
 })
 export class EditableComponent implements OnInit {
   @Output() update = new EventEmitter();
-  @ContentChild(ViewModeDirective) viewModeTpl: ViewModeDirective;
-  @ContentChild(EditModeDirective) editModeTpl: EditModeDirective;
+  @ContentChild(ViewModeDirective, { static: false }) viewModeTpl: ViewModeDirective;
+  @ContentChild(EditModeDirective, { static: false }) editModeTpl: EditModeDirective;
 
   mode: "view" | "edit" = "view";
 
   editMode = new Subject();
   editMode$ = this.editMode.asObservable();
 
-  constructor(private host: ElementRef) {}
+  constructor(private host: ElementRef) { }
 
   get currentView() {
     return this.mode === "view" ? this.viewModeTpl.tpl : this.editModeTpl.tpl;
@@ -73,5 +73,5 @@ export class EditableComponent implements OnInit {
     this.mode = "view";
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 }

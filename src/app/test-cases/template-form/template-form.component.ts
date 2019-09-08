@@ -8,7 +8,7 @@ import { NgForm } from "@angular/forms";
 export class TemplateFormComponent {
   subscriptions = ["Basic", "Advanced", "Pro"];
   selectedSubscription = "Advanced";
-  @ViewChild("signupForm") sgForm: NgForm;
+  @ViewChild("signupForm", { static: false }) sgForm: NgForm;
   onSubmit() {
     console.log(this.sgForm.value);
   }

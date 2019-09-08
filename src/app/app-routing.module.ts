@@ -1,3 +1,5 @@
+import { MinesweeperGameComponent } from './test-cases/minesweeper-game/minesweeper-game.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { DataPatchRxFormComponent } from "./test-cases/data-patch-rx-form/data-patch-rx-form.component";
 import { ViewReactiveFormComponent } from "./test-cases/view-reactive-form/view-reactive-form.component";
 import { TemplateFormComponent } from "./test-cases/template-form/template-form.component";
@@ -10,7 +12,7 @@ const routes: Routes = [
   {
     path: "",
     pathMatch: "full",
-    redirectTo: "data-patch-rx-form"
+    component: DashboardComponent
   },
   {
     path: "template-form",
@@ -46,6 +48,10 @@ const routes: Routes = [
     path: "data-patch-rx-form",
     component: DataPatchRxFormComponent
   },
+  {
+    path: "minesweeper-game",
+    component: MinesweeperGameComponent
+  },
   { path: "**", redirectTo: "" }
 ];
 
@@ -53,4 +59,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

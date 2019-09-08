@@ -14,6 +14,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { ViewReactiveFormComponent } from './test-cases/view-reactive-form/view-reactive-form.component';
 import { DataPatchRxFormComponent } from './test-cases/data-patch-rx-form/data-patch-rx-form.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MinesweeperGameComponent } from './test-cases/minesweeper-game/minesweeper-game.component';
 library.add(fas);
 
 @NgModule({
@@ -25,7 +27,9 @@ library.add(fas);
     ReactiveFormComponent,
     ShowPasswordDirective,
     ViewReactiveFormComponent,
-    DataPatchRxFormComponent
+    DataPatchRxFormComponent,
+    DashboardComponent,
+    MinesweeperGameComponent
   ],
   imports: [
     BrowserModule,
